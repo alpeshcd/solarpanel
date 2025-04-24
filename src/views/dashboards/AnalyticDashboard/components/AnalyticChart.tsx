@@ -9,7 +9,7 @@ import type { WebAnalyticData } from '../types'
 
 type WebAnalyticProps = {
     data: WebAnalyticData
-    activeSeries: WebAnalyticData['series']
+    activeSeries: any
 }
 
 const WebAnalytic = ({ data, activeSeries }: WebAnalyticProps) => {
@@ -98,7 +98,7 @@ const WebAnalytic = ({ data, activeSeries }: WebAnalyticProps) => {
             <div className="mt-4">
                 <Chart
                     type="line"
-                    series={activeSeries.map((s) => ({
+                    series={activeSeries.map((s:any) => ({
                         name: s.name,
                         data: s.data,
                     }))}
@@ -106,7 +106,7 @@ const WebAnalytic = ({ data, activeSeries }: WebAnalyticProps) => {
                     height="360px"
                     customOptions={{
                         legend: { show: false },
-                        colors: activeSeries.map((s) => s.color ?? '#000'),
+                        colors: activeSeries.map((s:any) => s.color ?? '#000'),
                     }}
                 />
             </div>

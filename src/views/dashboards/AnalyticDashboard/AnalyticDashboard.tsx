@@ -6,6 +6,7 @@ import { apiGetAnalyticDashboard } from '@/services/DashboardService'
 import useSWR from 'swr'
 import type { GetAnalyticDashboardResponse, Period } from './types'
 import { Switcher } from '@/components/ui'
+import SolarLifecycleTracker from './components/solarBadge'
 
 const AnalyticDashboard = () => {
     const [selectedPeriod, setSelectedPeriod] = useState<Period>('thisMonth')
@@ -14,8 +15,12 @@ const AnalyticDashboard = () => {
     const [groupAActive, setGroupAActive] = useState(true)
     const [groupBActive, setGroupBActive] = useState(false)
 
-    const [groupASeries, setGroupASeries] = useState([])
-    const [groupBSeries, setGroupBSeries] = useState([])
+    const [groupASeries, setGroupASeries] = useState<
+        { color?: string; name: string; data: number[] }[]
+    >([])
+    const [groupBSeries, setGroupBSeries] = useState<
+        { color?: string; name: string; data: number[] }[]
+    >([])
 
     const { data, isLoading } = useSWR(
         ['/api/dashboard/analytic'],
@@ -33,9 +38,7 @@ const AnalyticDashboard = () => {
             MAX_VISIBLE_SERIES,
         )
         const half = Math.ceil(series.length / 2)
-        //@ts-ignore
         setGroupASeries(series.slice(0, half))
-        //@ts-ignore
         setGroupBSeries(series.slice(half))
 
         // Auto enable A, disable B initially
@@ -48,6 +51,13 @@ const AnalyticDashboard = () => {
         <Loading loading={isLoading}>
             {data && (
                 <div className="flex flex-col gap-4">
+                    {/* <SolarLifecycleTracker
+                        sunStatus="active"
+                        panelStatus="active"
+                        batteryStatus="idle"
+                        gridStatus="idle"
+                    /> */}
+
                     <AnalyticHeader
                         selectedPeriod={selectedPeriod}
                         onSelectedPeriodChange={setSelectedPeriod}
