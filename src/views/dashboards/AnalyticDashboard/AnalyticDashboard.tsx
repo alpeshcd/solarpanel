@@ -30,7 +30,6 @@ const AnalyticDashboard = () => {
         },
     )
 
-    const mainTypes = ['Power']
     const subTypesMap: Record<string, string[]> = {
         DC: ['PV Current', 'PV Voltage'],
         AC: ['AC Current', 'AC Voltage'],
@@ -80,13 +79,11 @@ const AnalyticDashboard = () => {
         // If AC or DC is selected but not Power, filter accordingly
         else {
             if (checkedTypes.includes('AC')) {
-                // Check if any AC subtypes are selected
                 const acSubtypesSelected = subTypesMap.AC.some((subtype) =>
                     checkedTypes.includes(subtype),
                 )
 
                 if (acSubtypesSelected) {
-                    // Only include series that match the selected subtypes
                     subTypesMap.AC.forEach((subtype) => {
                         if (checkedTypes.includes(subtype)) {
                             const matchingSeries = allSeries.filter((series) =>
@@ -96,7 +93,6 @@ const AnalyticDashboard = () => {
                         }
                     })
                 } else {
-                    // If no subtypes are selected, include all AC series
                     const acSeries = allSeries.filter((series) =>
                         subTypesMap.AC.some((subtype) =>
                             seriesMatchesSubtype(series.name, subtype),
@@ -113,7 +109,6 @@ const AnalyticDashboard = () => {
                 )
 
                 if (dcSubtypesSelected) {
-                    // Only include series that match the selected subtypes
                     subTypesMap.DC.forEach((subtype) => {
                         if (checkedTypes.includes(subtype)) {
                             const matchingSeries = allSeries.filter((series) =>
@@ -123,7 +118,6 @@ const AnalyticDashboard = () => {
                         }
                     })
                 } else {
-                    // If no subtypes are selected, include all DC series
                     const dcSeries = allSeries.filter((series) =>
                         subTypesMap.DC.some((subtype) =>
                             seriesMatchesSubtype(series.name, subtype),
@@ -164,34 +158,31 @@ const AnalyticDashboard = () => {
             let updated = [...prev]
 
             if (prev.includes(type)) {
-                // Remove the type
                 updated = updated.filter((t) => t !== type)
 
-                // If it's a parent type, also remove all its subtypes
                 if (subTypesMap[type]) {
                     updated = updated.filter(
                         (t) => !subTypesMap[type].includes(t),
                     )
                 }
 
-                // If it's Power, remove all types
                 if (type === 'Power') {
                     updated = []
                 }
             } else {
-                // If it's Power, remove all other types first
                 if (type === 'Power') {
                     updated = ['Power']
                 } else {
-                    // If Power is already selected, remove it
                     if (updated.includes('Power')) {
                         updated = updated.filter((t) => t !== 'Power')
                     }
 
-                    // Add the type
                     updated.push(type)
 
-                    // If it's a subtype, make sure its parent is checked too
+                    if (subTypesMap[type]) {
+                        updated.push(...subTypesMap[type])
+                    }
+
                     const parentType = getParentType(type)
                     if (parentType && !updated.includes(parentType)) {
                         updated.push(parentType)
@@ -203,10 +194,6 @@ const AnalyticDashboard = () => {
         })
     }
 
-    // Determine which filters to show based on current selection
-    const showMainTypes = () => mainTypes
-
-    // Only show subtypes for selected parent types
     const showSubtypes = () => {
         const result: Record<string, string[]> = {}
 
@@ -265,31 +252,30 @@ const AnalyticDashboard = () => {
                         </div>
                     </div>
 
-                    {/* Main filter types - Always shown */}
-                    {/* Main filter types - Always shown */}
+                    {/* Main filter types - With improved logic */}
                     <div className="flex flex-wrap gap-4 mb-2">
-                        {showMainTypes().map((type) => {
-                            const isChecked = checkedTypes.includes(type)
-                            return (
+
+                        {!checkedTypes.includes('AC') &&
+                            !checkedTypes.includes('DC') && (
                                 <label
-                                    key={type}
-                                    onClick={() => handleCheckboxChange(type)}
+                                    onClick={() =>
+                                        handleCheckboxChange('Power')
+                                    }
                                     className={`flex items-center gap-2 px-4 py-2 rounded-md border cursor-pointer transition-all
-                ${isChecked ? 'bg-blue-100 border-blue-500' : 'bg-gray-100 border-gray-300'}
-                hover:bg-blue-200`}
+                                ${checkedTypes.includes('Power') ? 'bg-blue-100 border-blue-500' : 'bg-gray-100 border-gray-300'}
+                                `}
                                 >
                                     <input
                                         type="checkbox"
-                                        checked={isChecked}
+                                        checked={checkedTypes.includes('Power')}
                                         readOnly
-                                        className="w-4 h-4 accent-blue-600"
+                                        className="w-4 h-4 accent-orange-600"
                                     />
                                     <span className="text-sm font-medium text-gray-700">
-                                        {type}
+                                        Power(kw)
                                     </span>
                                 </label>
-                            )
-                        })}
+                            )}
                     </div>
 
                     {/* Subtypes section - Only shown for selected parent types */}
@@ -297,7 +283,7 @@ const AnalyticDashboard = () => {
                         ([mainType, subtypes]) => (
                             <div
                                 key={mainType}
-                                className="flex flex-wrap gap-4 mb-2 ml-6"
+                                className="flex flex-wrap gap-4 mb-2 "
                             >
                                 {subtypes.map((subType) => {
                                     const isChecked =
@@ -307,7 +293,7 @@ const AnalyticDashboard = () => {
                                             key={subType}
                                             className={`flex items-center gap-2 px-4 py-2 rounded-md border cursor-pointer transition-all
                                         ${isChecked ? 'bg-blue-100 border-blue-500' : 'bg-gray-100 border-gray-300'}
-                                        hover:bg-blue-200`}
+                                        `}
                                             onClick={() =>
                                                 handleCheckboxChange(subType)
                                             }
@@ -316,7 +302,7 @@ const AnalyticDashboard = () => {
                                                 type="checkbox"
                                                 checked={isChecked}
                                                 readOnly
-                                                className="w-4 h-4 accent-blue-600"
+                                                className="w-4 h-4 accent-orange-600"
                                             />
                                             <span className="text-sm font-medium text-gray-700">
                                                 {subType}
@@ -333,46 +319,69 @@ const AnalyticDashboard = () => {
                         <div className="flex gap-4 flex-wrap mt-4">
                             {Array.from(
                                 new Set(
-                                    [...groupASeries, ...groupBSeries].map(
-                                        (s) => s.color || 'default',
-                                    ),
+                                    [...groupASeries, ...groupBSeries]
+                                        .filter((s: any) => {
+                                            if (
+                                                checkedTypes.includes('Power')
+                                            ) {
+                                                return (
+                                                    s.name.includes(
+                                                        'Total Active Power',
+                                                    ) ||
+                                                    s.name.includes(
+                                                        'Total DC Power',
+                                                    )
+                                                )
+                                            }
+                                            return true
+                                        })
+                                        .map((s: any) => s.valueName || s.name),
                                 ),
-                            ).map((color) => (
-                                <div
-                                    key={color}
-                                    className="flex items-center gap-3"
-                                >
-                                    {/* Display the color dot */}
-                                    <span
-                                        className="w-4 h-4 rounded-full"
-                                        style={{ backgroundColor: color }}
-                                    ></span>
+                            ).map((valueName) => {
+                                const series = [
+                                    ...groupASeries,
+                                    ...groupBSeries,
+                                ].find(
+                                    (s: any) =>
+                                        s.valueName === valueName ||
+                                        s.name === valueName,
+                                )
+                                const color = series?.color || 'default'
 
-                                    {/* Custom toggle switch */}
+                                return (
                                     <div
-                                        onClick={() => toggleColor(color)}
-                                        className={`w-12 h-6 flex items-center rounded-full cursor-pointer transition-all duration-300 ${
-                                            activeColors.includes(color)
-                                                ? ''
-                                                : 'opacity-40'
-                                        }`}
-                                        style={{
-                                            backgroundColor:
-                                                activeColors.includes(color)
-                                                    ? color
-                                                    : '#d1d5db',
-                                        }}
+                                        key={valueName}
+                                        className="flex items-center gap-3"
                                     >
                                         <div
-                                            className={`w-[22px] h-[22px] bg-white rounded-full shadow-md transform transition-transform duration-300 ${
+                                            onClick={() => toggleColor(color)}
+                                            className={`w-12 h-6 flex items-center rounded-full cursor-pointer transition-all duration-300 ${
                                                 activeColors.includes(color)
-                                                    ? 'translate-x-6'
-                                                    : 'translate-x-1'
+                                                    ? ''
+                                                    : 'opacity-40'
                                             }`}
-                                        ></div>
+                                            style={{
+                                                backgroundColor:
+                                                    activeColors.includes(color)
+                                                        ? color
+                                                        : '#d1d5db',
+                                            }}
+                                        >
+                                            <div
+                                                className={`w-[22px] h-[22px] bg-white rounded-full shadow-md transform transition-transform duration-300 ${
+                                                    activeColors.includes(color)
+                                                        ? 'translate-x-6'
+                                                        : 'translate-x-1'
+                                                }`}
+                                            ></div>
+                                        </div>
+
+                                        <span className="text-sm font-medium text-gray-700">
+                                            {valueName}
+                                        </span>
                                     </div>
-                                </div>
-                            ))}
+                                )
+                            })}
                         </div>
                     )}
                 </div>

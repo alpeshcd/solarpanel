@@ -688,33 +688,42 @@ export const analyticsData = {
                     name: 'Total Active Power',
                     color: '#34D399',
                     data: [0, 10, 40, 45, 40, 10, 0],
+                    valueName: 'P1',
                 },
                 {
                     name: 'Total DC Power',
                     color: '#FBBF24',
                     data: [0, 9, 38, 43, 38, 9, 0],
+                    valueName: 'P2',
                 },
                 {
                     name: 'PV Current',
                     color: '#60A5FA',
                     data: [0, 2, 10, 12, 10, 2, 0],
+                    valueName: 'P3',
                 },
+
                 {
                     name: 'PV Voltage',
                     color: '#F97316',
                     data: [0, 200, 600, 800, 600, 200, 0],
+                    valueName: 'P4',
                 },
                 {
                     name: 'AC Current',
                     color: '#F87171',
                     data: [0, 2, 11, 13, 11, 2, 0],
+                    valueName: 'P5',
                 },
                 {
                     name: 'AC Voltage',
                     color: '#9CA3AF',
                     data: [0, 220, 400, 450, 420, 220, 0],
+                    valueName: 'P6',
                 },
             ],
+
+            date: ['00.00', '04.10', '08.20', '12.30', '16.40', '20.50', 'Sun'],
         },
     },
     thisYear: {

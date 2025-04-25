@@ -55,8 +55,8 @@ const AnalyticHeader = ({
     return (
         <div>
             <Card className="mt-2 mb-2">
-                <div className="grid grid-flow-col auto-cols-max gap-2 items-end">
-                    <div className="min-w-[250px]">
+                <div className="grid grid-flow-col  gap-2 items-end">
+                    <div className="">
                         <div className="mb-2 text-gray-900 font-semibold">
                             Type
                         </div>
@@ -69,7 +69,7 @@ const AnalyticHeader = ({
                             }
                         />
                     </div>
-                    <div className="min-w-[250px]">
+                    <div className="">
                         <div className="mb-2 text-gray-900 font-semibold">
                             Device
                         </div>
