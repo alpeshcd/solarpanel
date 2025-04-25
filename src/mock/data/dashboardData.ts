@@ -1303,7 +1303,7 @@ export const projectData = {
 export const analyticsData = {
     thisMonth: {
         webAnalytic: {
-            date: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+            date: ['00.00', '04.10', '08.20', '12.30', '16.40', '20.50'],
             pageView: {
                 value: 5423,
                 growShrink: 4.2,

@@ -6,11 +6,11 @@ import { apiGetAnalyticDashboard } from '@/services/DashboardService'
 import useSWR from 'swr'
 import type { GetAnalyticDashboardResponse, Period } from './types'
 import { Switcher } from '@/components/ui'
-import SolarLifecycleTracker from './components/solarBadge'
 
 const AnalyticDashboard = () => {
     const [selectedPeriod, setSelectedPeriod] = useState<Period>('thisMonth')
     const MAX_VISIBLE_SERIES = 10
+    const [activeColors, setActiveColors] = useState<string[]>([])
 
     const [groupAActive, setGroupAActive] = useState(true)
     const [groupBActive, setGroupBActive] = useState(false)
@@ -33,31 +33,38 @@ const AnalyticDashboard = () => {
     )
     useEffect(() => {
         if (!data?.[selectedPeriod]?.webAnalytic?.series) return
+
         const series = data[selectedPeriod].webAnalytic.series.slice(
             0,
             MAX_VISIBLE_SERIES,
         )
-        const half = Math.ceil(series.length / 2)
+
+        const half = Math.ceil(series.length)
         setGroupASeries(series.slice(0, half))
         setGroupBSeries(series.slice(half))
 
-        // Auto enable A, disable B initially
+        // Set initial active colors (all visible at start)
+        const uniqueColors = Array.from(
+            new Set(series.map((item) => item.color || 'default')),
+        )
+        setActiveColors(uniqueColors)
+
         setGroupAActive(true)
         setGroupBActive(false)
     }, [data, selectedPeriod])
 
-    console.log(data, 'datataat')
+    const toggleColor = (color: string) => {
+        setActiveColors((prev) =>
+            prev.includes(color)
+                ? prev.filter((c) => c !== color)
+                : [...prev, color],
+        )
+    }
+
     return (
         <Loading loading={isLoading}>
             {data && (
                 <div className="flex flex-col gap-4">
-                    {/* <SolarLifecycleTracker
-                        sunStatus="active"
-                        panelStatus="active"
-                        batteryStatus="idle"
-                        gridStatus="idle"
-                    /> */}
-
                     <AnalyticHeader
                         selectedPeriod={selectedPeriod}
                         onSelectedPeriodChange={setSelectedPeriod}
@@ -69,7 +76,9 @@ const AnalyticDashboard = () => {
                                 activeSeries={[
                                     ...(groupAActive ? groupASeries : []),
                                     ...(groupBActive ? groupBSeries : []),
-                                ]}
+                                ].filter((s) =>
+                                    activeColors.includes(s.color || 'default'),
+                                )}
                             />
                         </div>
                         {/* <div className="2xl:col-span-1">
@@ -78,35 +87,33 @@ const AnalyticDashboard = () => {
                                 selectedPeriod={selectedPeriod}
                             />
                         </div> */}
-                        <div className="flex gap-6">
-                            <div className="flex items-center gap-2 text-sm">
-                                <span className="text-gray-700 text-base">
-                                    Group A
-                                </span>
-                                <Switcher
-                                    checked={groupAActive}
-                                    onChange={setGroupAActive}
-                                    switcherClass={
-                                        groupAActive
-                                            ? 'bg-blue-500'
-                                            : 'bg-gray-300'
-                                    }
-                                />
-                            </div>
-                            <div className="flex items-center gap-2 text-sm">
-                                <span className="text-gray-700 text-base">
-                                    Group B
-                                </span>
-                                <Switcher
-                                    checked={groupBActive}
-                                    onChange={setGroupBActive}
-                                    switcherClass={
-                                        groupBActive
-                                            ? 'bg-pink-500'
-                                            : 'bg-gray-300'
-                                    }
-                                />
-                            </div>
+                        <div className="flex gap-4 flex-wrap">
+                            {Array.from(
+                                new Set(
+                                    [...groupASeries, ...groupBSeries].map(
+                                        (s) => s.color || 'default',
+                                    ),
+                                ),
+                            ).map((color) => (
+                                <div
+                                    key={color}
+                                    className="flex items-center gap-2"
+                                >
+                                    <span
+                                        className="w-4 h-4 rounded-full"
+                                        style={{ backgroundColor: color }}
+                                    ></span>
+                                    <Switcher
+                                        checked={activeColors.includes(color)}
+                                        onChange={() => toggleColor(color)}
+                                        switcherClass={
+                                            activeColors.includes(color)
+                                                ? 'bg-green-500'
+                                                : 'bg-gray-300'
+                                        }
+                                    />
+                                </div>
+                            ))}
                         </div>
                     </div>
                     {/* <div className="grid grid-cols-12 gap-4">

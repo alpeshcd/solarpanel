@@ -47,17 +47,16 @@ const AnalyticHeader = ({}: AnalyticHeaderProps) => {
         }
     }
 
-    const colourOptions = [
-        { value: 'ocean', label: 'Ocean', color: '#00B8D9' },
-        { value: 'blue', label: 'Blue', color: '#0052CC' },
-        { value: 'purple', label: 'Purple', color: '#5243AA' },
-        { value: 'red', label: 'Red', color: '#FF5630' },
-        { value: 'orange', label: 'Orange', color: '#FF8B00' },
-        { value: 'yellow', label: 'Yellow', color: '#FFC400' },
-        { value: 'green', label: 'Green', color: '#36B37E' },
-        { value: 'forest', label: 'Forest', color: '#00875A' },
-        { value: 'slate', label: 'Slate', color: '#253858' },
-        { value: 'silver', label: 'Silver', color: '#666666' },
+    const DeviceOPtion = [
+        { value: 'device1', label: 'device1', color: '#00B8D9' },
+        { value: 'device2', label: 'device2', color: '#0052CC' },
+        { value: 'device3', label: 'device3', color: '#5243AA' },
+        { value: 'device4', label: 'device4', color: '#FF5630' },
+    ]
+    const Type = [
+        { value: 'Power', label: 'Power', color: '#00B8D9' },
+        { value: 'AC', label: 'AC', color: '#0052CC' },
+        { value: 'DC', label: 'DC', color: '#5243AA' },
     ]
 
     return (
@@ -66,11 +65,20 @@ const AnalyticHeader = ({}: AnalyticHeaderProps) => {
                 <div className="grid grid-flow-col auto-cols-max gap-2 items-end">
                     <div className="min-w-[250px]">
                         <div className="mb-2 text-gray-900 font-semibold">
+                            Type
+                        </div>
+                        <Select
+                            placeholder="Select Industry"
+                            options={Type}
+                        />
+                    </div>
+                    <div className="min-w-[250px]">
+                        <div className="mb-2 text-gray-900 font-semibold">
                             Industry
                         </div>
                         <Select
                             placeholder="Select Industry"
-                            options={colourOptions}
+                            options={DeviceOPtion}
                         />
                     </div>
 
