@@ -64,7 +64,7 @@ const Widget = ({
     )
 }
 
-const Metrics = ({ data, selectedPeriod }: MetricsProps) => {
+const Metrics = ({  selectedPeriod }: MetricsProps) => {
     return (
         <div className="flex flex-col 2xl:flex-col xl:flex-row gap-4">
             <Widget
@@ -72,19 +72,19 @@ const Metrics = ({ data, selectedPeriod }: MetricsProps) => {
                 value={
                     <NumericFormat
                         displayType="text"
-                        value={data.visitors.value}
+                        value={9}
                         thousandSeparator={true}
                     />
                 }
-                growShrink={data.visitors.growShrink}
+                growShrink={9}
                 compareFrom={vsPeriod[selectedPeriod]}
                 icon={<TbUsers />}
                 iconClass="bg-orange-200"
             />
             <Widget
                 title="Conversion rate"
-                value={`${data.conversionRate.value}%`}
-                growShrink={data.conversionRate.growShrink}
+                value={`${8}%`}
+                growShrink={8}
                 compareFrom={vsPeriod[selectedPeriod]}
                 icon={<TbCoins />}
                 iconClass="bg-emerald-200"
@@ -94,11 +94,11 @@ const Metrics = ({ data, selectedPeriod }: MetricsProps) => {
                 value={
                     <NumericFormat
                         displayType="text"
-                        value={data.adCampaignClicks.value}
+                        value={7}
                         thousandSeparator={true}
                     />
                 }
-                growShrink={data.adCampaignClicks.growShrink}
+                growShrink={8}
                 compareFrom={vsPeriod[selectedPeriod]}
                 icon={<TbClick />}
                 iconClass="bg-purple-200"
