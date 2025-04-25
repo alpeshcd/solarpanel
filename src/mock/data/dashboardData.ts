@@ -1307,37 +1307,153 @@ export const analyticsData = {
             pageView: {
                 value: 5423,
                 growShrink: 4.2,
+                color: '#34D399', // Added color for page views
             },
             avgTimeOnPage: {
                 value: '2m 34s',
                 growShrink: -1.1,
+                color: '#FBBF24', // Added color for avg time
+            },
+            bounceRate: {
+                value: '35%',
+                growShrink: -0.5,
+                color: '#F87171', // Added color for bounce rate
+            },
+            sessions: {
+                value: 7321,
+                growShrink: 2.5,
+                color: '#60A5FA', // Added color for sessions
             },
             series: [
                 {
                     name: 'Natural',
                     color: '#34D399',
-                    data: [120, 200, 150, 170, 90, 300, 250],
+                    data: [0, 0, 150, 400, 300, 300, 0],
                 },
                 {
                     name: 'Referral',
                     color: '#F87171',
-                    data: [180, 100, 200, 90, 160, 250, 300],
+                    data: [0, 0, 200, 400, 320, 200, 0],
                 },
                 {
                     name: 'Direct',
                     color: '#60A5FA',
-                    data: [130, 170, 180, 200, 220, 210, 190],
+                    data: [0, 0, 180, 400, 220, 210, 0],
                 },
                 {
                     name: 'Social',
                     color: '#FBBF24',
-                    data: [100, 90, 150, 120, 140, 130, 110],
+                    data: [0, 0, 150, 400, 300, 130, 0],
+                },
+                {
+                    name: 'Email',
+                    color: '#9CA3AF', // Added Email data
+                    data: [0, 0, 100, 300, 250, 190, 0],
+                },
+                {
+                    name: 'Paid',
+                    color: '#F97316', // Added Paid data
+                    data: [0, 0, 50, 100, 200, 300, 0],
+                },
+            ],
+        },
+        mobileAnalytic: {
+            date: ['00.00', '04.10', '08.20', '12.30', '16.40', '20.50'],
+            pageView: {
+                value: 3402,
+                growShrink: 3.8,
+                color: '#34D399', // Color for page view on mobile
+            },
+            avgTimeOnPage: {
+                value: '1m 45s',
+                growShrink: 2.3,
+                color: '#FBBF24', // Color for avg time on mobile
+            },
+            bounceRate: {
+                value: '40%',
+                growShrink: -0.4,
+                color: '#F87171', // Color for bounce rate on mobile
+            },
+            sessions: {
+                value: 5123,
+                growShrink: 1.5,
+                color: '#60A5FA', // Color for sessions on mobile
+            },
+            series: [
+                {
+                    name: 'Organic Search',
+                    color: '#34D399',
+                    data: [0, 0, 120, 320, 270, 250, 0],
+                },
+                {
+                    name: 'Referral',
+                    color: '#F87171',
+                    data: [0, 0, 100, 250, 200, 180, 0],
+                },
+                {
+                    name: 'Direct',
+                    color: '#60A5FA',
+                    data: [0, 0, 150, 300, 230, 200, 0],
+                },
+                {
+                    name: 'Social',
+                    color: '#FBBF24',
+                    data: [0, 0, 120, 280, 260, 150, 0],
+                },
+                {
+                    name: 'Paid',
+                    color: '#F97316',
+                    data: [0, 0, 70, 160, 180, 240, 0],
+                },
+            ],
+        },
+        conversionAnalytics: {
+            date: ['00.00', '04.10', '08.20', '12.30', '16.40', '20.50'],
+            conversions: {
+                value: 1245,
+                growShrink: 5.8,
+                color: '#34D399', // Color for conversions
+            },
+            revenue: {
+                value: '$5,324.00',
+                growShrink: 4.3,
+                color: '#FBBF24', // Color for revenue
+            },
+            avgOrderValue: {
+                value: '$45.00',
+                growShrink: 1.2,
+                color: '#60A5FA', // Color for average order value
+            },
+            series: [
+                {
+                    name: 'Natural',
+                    color: '#34D399',
+                    data: [0, 0, 50, 100, 150, 200, 0],
+                },
+                {
+                    name: 'Referral',
+                    color: '#F87171',
+                    data: [0, 0, 70, 120, 110, 130, 0],
+                },
+                {
+                    name: 'Direct',
+                    color: '#60A5FA',
+                    data: [0, 0, 90, 160, 140, 150, 0],
+                },
+                {
+                    name: 'Social',
+                    color: '#FBBF24',
+                    data: [0, 0, 80, 140, 160, 190, 0],
+                },
+                {
+                    name: 'Email',
+                    color: '#9CA3AF',
+                    data: [0, 0, 30, 80, 60, 50, 0],
                 },
             ],
         },
     },
 }
-
 
 export const marketingData = {
     kpiSummary: {

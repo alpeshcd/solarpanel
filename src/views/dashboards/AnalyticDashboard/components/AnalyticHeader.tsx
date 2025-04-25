@@ -4,25 +4,16 @@ import Button from '@/components/ui/Button'
 import DatePickerRange from '@/components/ui/DatePicker/DatePickerRange'
 import useDashboardStore from '@/store/dashboardStore'
 import { Card } from '@/components/ui'
-import type { Period } from '../types'
-
-type GroupOption = {
-    value: string
-    label: string
-    color: string
-}
 
 type AnalyticHeaderProps = {
-    selectedPeriod: Period
-    onSelectedPeriodChange: (period: Period) => void
-    groupOptions: GroupOption[]
-    groupASelection: string[]
-    groupBSelection: string[]
-    onGroupAChange: (names: string[]) => void
-    onGroupBChange: (names: string[]) => void
+    selectedType: string
+    onSelectedTypeChange: (type: string) => void
 }
 
-const AnalyticHeader = ({}: AnalyticHeaderProps) => {
+const AnalyticHeader = ({
+    selectedType,
+    onSelectedTypeChange,
+}: AnalyticHeaderProps) => {
     const {
         temp_start_date,
         temp_end_date,
@@ -59,6 +50,8 @@ const AnalyticHeader = ({}: AnalyticHeaderProps) => {
         { value: 'DC', label: 'DC', color: '#5243AA' },
     ]
 
+    const selectedTypeObj = Type.find((option) => option.value === selectedType)
+
     return (
         <div>
             <Card className="mt-2 mb-2">
@@ -68,13 +61,17 @@ const AnalyticHeader = ({}: AnalyticHeaderProps) => {
                             Type
                         </div>
                         <Select
-                            placeholder="Select Industry"
+                            placeholder="Select Type"
                             options={Type}
+                            value={selectedTypeObj}
+                            onChange={(selectedOption) =>
+                                onSelectedTypeChange(selectedOption.value)
+                            }
                         />
                     </div>
                     <div className="min-w-[250px]">
                         <div className="mb-2 text-gray-900 font-semibold">
-                            Industry
+                            Device
                         </div>
                         <Select
                             placeholder="Select Industry"

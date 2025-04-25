@@ -1,8 +1,6 @@
 import { useEffect, useRef } from 'react'
 import Card from '@/components/ui/Card'
 import Chart from '@/components/shared/Chart'
-import GrowShrinkValue from '@/components/shared/GrowShrinkValue'
-import { COLORS } from '@/constants/chart.constant'
 import { useThemeStore } from '@/store/themeStore'
 import { NumericFormat } from 'react-number-format'
 import type { WebAnalyticData } from '../types'
@@ -34,63 +32,34 @@ const WebAnalytic = ({ data, activeSeries }: WebAnalyticProps) => {
         <Card className="h-full">
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
                 <h4>Web analytic</h4>
-                <div className="inline-flex items-center gap-6">
-                    {/* <div className="flex items-center gap-1.5">
-                        <div
-                            className="h-3.5 w-3.5 rounded"
-                            style={{ backgroundColor: COLORS[0] }}
-                        />
-                        <div>Natural</div>
-                    </div>
-                    <div className="flex items-center gap-1.5">
-                        <div
-                            className="h-3.5 w-3.5 rounded"
-                            style={{ backgroundColor: COLORS[7] }}
-                        />
-                        <div>Referral</div>
-                    </div>
-                    <div className="flex items-center gap-1.5">
-                        <div
-                            className="h-3.5 w-3.5 rounded"
-                            style={{ backgroundColor: COLORS[8] }}
-                        />
-                        <div>Direct</div>
-                    </div> */}
-                </div>
+                <div className="inline-flex items-center gap-6"></div>
             </div>
-            <div className="mt-8">
+            <div className="mt-6">
                 <div className="flex items-center gap-10">
                     <div>
                         <div className="mb-2">Production</div>
                         <div className="flex items-end gap-2">
-                            <h3>
+                            <h4>
                                 <NumericFormat
                                     displayType="text"
-                                    value={data.pageView.value}
-                                    prefix={'$'}
+                                    value="4"
                                     thousandSeparator={true}
-                                />
-                            </h3>
-                            <GrowShrinkValue
-                                className="font-bold"
-                                value={data.pageView.growShrink}
-                                suffix="%"
-                                positiveIcon="+"
-                                negativeIcon=""
-                            />
+                                />{' '}
+                                <span className="text-base text-gray-600">
+                                    MWH{' '}
+                                </span>
+                            </h4>
                         </div>
                     </div>
                     <div>
                         <div className="mb-2">Net Revenue</div>
                         <div className="flex items-end gap-2">
-                            <h3>{data.avgTimeOnPage.value}</h3>
-                            <GrowShrinkValue
-                                className="font-bold"
-                                value={data.avgTimeOnPage.growShrink}
-                                suffix="%"
-                                positiveIcon="+"
-                                negativeIcon=""
-                            />
+                            <h4>
+                                4,036.4
+                                <span className="text-base text-gray-600">
+                                    INR{' '}
+                                </span>
+                            </h4>
                         </div>
                     </div>
                 </div>
